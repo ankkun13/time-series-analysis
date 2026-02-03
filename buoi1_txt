@@ -1,0 +1,115 @@
+Buổi 1: Phân tích chuỗi thời gian
+
+1. Giới thiệu về CTG
+2. Các khái niệm cơ bản
+3. Các mô hình chuỗi tg dừng
+4. Các mô hình chuỗi tg không dừng
+5. Ước lượng dự báo
+6. Mô hình có tính mùa vụ
+7. Một số mô hình với phương sai thay đổi
+8. Một số mô hình học máy
+
+
+Thực hành R
+
+Hình thức kiểm tra
+    - Thường xuyên 20% -> Điểm danh, BT
+    - Giữa kì 20% -> Bài kiểm tra
+    - Cuối kì 60% -> Báo cáo / Thi thực hành
+
+ctdyfd2p
+
+
+- Lãi xuât hằng ngày, cổ phiếu, nhiệt độ, mưa, gió, sản xuất cây trồng, vật nuôi, xói mòn đất,
+điện tim, ...
+
+Ôn tập:
+    - Trung bình   |  Trung bình mẫu
+    - Trung vị     |  Trung vị mẫu
+    - Mode
+    -> Đo xu thế tâm
+
+    - Phương sai   | Phương sai mẫu 
+    - Độ lệch
+    - delta (range): max - min
+    - Delta Q = Q_3 - Q_1
+    - Outlier
+    -> Đo độ phân tán dữ
+
+Một số tính chất của kì vọng, phương sai:
+    - E(c) = c, D(c) = 0
+    - E(cX) = c.E(X), D(cX) = c^2.D(X)
+    - E(X +- Y) = E(X) +- E(Y)
+    - D(X +- Y) = D(X) + D(Y)
+
+Phân phối chuẩn: X ~ N(EX, DX)
+
+Một số phương pháp ước lượng:
+    - Phương pháp bình phương tối thiểu.
+    - Phương pháp mô men.
+    - MLE
+
+Mục đích của phân tích chuỗi thời gian
+    - Hiểu chuỗi thời gian, lập ra mô hình tạo ra chuỗi thời gian 
+    - Dự báo các giá trị trong tương lạ
+
+Xây dựng mô hình có 3 bước chính trong việc xây dựng mô hình chuỗi thời gian
+    - Xác định mô hình
+    - Điều chỉnh mô hình (model fitting)
+    - Chuẩn đoán mô hình
+
+Các thành phần của dữ liệu chuỗi thời gian
+    - Thành phần xu hướng: là yếu tố thể hiện xu hướng thay đổi theo thời gian. Thành phần 
+này dùng để chỉ xu hướng tăng hay giảm trong thời gian dài. Biểu diễn bởi một đường thẳng
+hoặc một đường cong trơn.
+    - Thành phần mùa: dùng để chỉ xu hướng tăng hay giảm theo mùa trong năm.
+    - Thành phần chu kỳ: chỉ sự thay đổi theo chu kỳ. Thành phần này khác thành phần mùa ở
+chu kỳ kéo dài hơn 1 năm. 
+    - Thành phần bất thường: chỉ sự thay đổi bất thường của giá trị trong chuỗi thời gian.
+Sự thay đổi này không thể sự đoán bằng các số liệu kinh nghiệm trong quá khứ, không có tính
+chu kỳ.
+
+Chuỗi thời gian
+    - ĐN: Chuỗi thời gian là dãy các quan sát về một biến số nào đó theo thời gian
+    - Chuỗi thời gian X_t được mô tả như sau: {X_t, t \thuộc T}
+    - Trong đó: 
+        - X_t giá trị quan sát tại thời gian t
+        - T khoảng thời gian quan sát
+
+    - Chuỗi thời gian liên tục nếu T liên tục
+    - Chuỗi thời gian rời rạc nếu T rời rạc
+
+    - Khoảng cách giữa những lần quan sát được chia đều nhau.
+
+Hàm trung bình
+    - Đối với quá trình ngẫu nhiên X_t hàm kì vọng được xác định bởi:
+            \mu_t = E(X_t) 
+
+Hàm phương sai
+    - \sigma_t^2 = Var(X_t)
+
+Hàm Corvariance
+    - Cov(X_t, X_s) = E[(X_t - \mu_t)(X_s- \mu_s)] = E(X_t, X_s) - \mu_t . \mu_s
+    - \gamma_k = Cov(X_t,X_s)
+    
+    - \rho = 
+    - Các giá trị \rho gần +-1 viểu hiện sự phụ thuộc tuyến tính mạnh, các giá trị gần 0 chỉ
+    sự phụ thuộc tuyến tính yếu
+    - Trung bình trượt
+    - Xem trong sách giáo khoa
+    - Tính dừng
+    - Dừng yếu và dừng mạnh. Dừng yếu là kì vọng và hiệp phương sai bất biến theo sự dịch 
+    chuyển thời gian còn dừng mạnh là toàn bộ phân phối xác suất bất biến theo sự dịch chuyển
+    thời gian.
+    - Tính dừng mạnh thường xuất hiện nhiều trong lĩnh vực xác xuất thống kê. Còn trong thực 
+    tế tính dừng yếu sẽ dễ dàng kiểm tra các điều kiện và nhiều mô hình trong thực tế.
+    - Một quá trình ngẫu nhiên được gọi là chuỗi dừng nếu chuỗi đó có trung bình và hiệp
+    phương sai giữa hai giá trị chỉ phụ thuộc vào khoảng cách hay đọ chễ chứ không phụ thuộc
+    vào thời điểm thực tế và hiệp phương sai được tính.
+    - Kì vọng không đổi: E(X_t) = \mu
+    -Hiệp phương sai không phụ thuộc vào t: Cov(X_t, X_t+k) = E[(X_t - \mu)(X_t+k - \mu)]
+
+    -Chú ý: ACF : \rho_k
+        PACF: \phi_kk
+    - Hàm tương quan riêng (PACF):
+    Hệ số tương quan riêng phản ánh mức độ kết hợp tuyến tính.
